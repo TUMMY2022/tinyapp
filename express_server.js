@@ -72,6 +72,21 @@ app.post("/urls/:id/delete", (req, res) => {
   }
 
 });
+
+app.post("/urls/:id", (req, res) => {
+  let longURL = req.body.longURL;
+  const shortURL = req.params.id;
+  const userID = req.params.user_id;
+  if (urlDatabase[shortURL].userID === userID) {
+    urlDatabase[shortURL] = longURL; 
+    res.redirect(`/urls`);
+  } else {
+    res.status(403).send({ error : 'status(403): You do not have permission to delete!'});
+  }
+
+});
+
+
 /** 
 app.get('/register', (req, res) => {
   const currUserId = req.session.id;
