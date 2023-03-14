@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
+
 app.set("view engine", "ejs");
 
 const urlDatabase = {
@@ -45,6 +46,15 @@ app.get("/urls/:id", (req, res) => {
   const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id]/* What goes here? */ };
   res.render("urls_show", templateVars);
 });
+
+app.get('/register', (req, res) => {
+  const currUserId = req.session.id;
+  const templateVars = {
+    userId: currUserId,
+  };
+  res.render("registration", templateVars);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
