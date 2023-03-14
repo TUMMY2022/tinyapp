@@ -7,3 +7,5 @@ function generateRandomString() {
   }
   return result;
 };
+
+module.exports = generateRandomString;

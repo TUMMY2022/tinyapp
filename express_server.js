@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
+const generateRandomString = require("./outer/helper");
 
 app.set("view engine", "ejs");
 
@@ -39,12 +40,24 @@ app.get("/urls/new", (req, res) => {
 
 app.post("/urls", (req, res) => {
   console.log(req.body); // Log the POST request body to the console
-  res.send("Ok"); // Respond with 'Ok' (we will replace this)
+  let longURL = req.body.longURL;
+  let shortURL = generateRandomString();
+  //Store the new Short and LongURL in the Database
+  urlDatabase[shortURL] = longURL;
+  console.log("TEST ", urlDatabase);
+  //res.send("Ok"); // Respond with 'Ok' (we will replace this)
+  res.redirect(`/urls/${shortURL}`);
 });
 
 app.get("/urls/:id", (req, res) => {
   const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id]/* What goes here? */ };
   res.render("urls_show", templateVars);
+});
+
+app.get("/u/:id", (req, res) => {
+  const shortURL = req.params.id;
+  const longURL = urlDatabase[shortURL]
+  res.redirect(longURL);
 });
 
 app.get('/register', (req, res) => {
