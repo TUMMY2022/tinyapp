@@ -12,6 +12,27 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+const users = {
+  "abc123": {
+    id: "user1",
+    email: "user1@example.com",
+    password: "user1password",
+  },
+  "efd456": {
+    id: "user2",
+    email: "user2@example.com",
+    password: "user2password",
+  },
+};
+
+const emailValidator = (emailToCheck, users) => {   
+  for (let user in users) {
+    if (users[user].email === emailToCheck) {
+      
+      return user;
+    }  
+  } 
+};
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser())
@@ -24,9 +45,9 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  const userName = req.cookies['username'];
-  console.log("username", userName);
-  const templateVars = { urls: urlDatabase, userName };
+  const user= req.cookies['username'];
+  console.log("username", user);
+  const templateVars = { urls: urlDatabase, user};
   res.render("urls_index", templateVars);
 });
 
@@ -100,12 +121,33 @@ app.post("/logout", (req, res) => {
   res.redirect(`/urls`);
 });
 
-app.get('/register', (req, res) => {
-  res.render("registration");
+app.post("/register", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  if (!email || !password) {
+    res.status(400).send({ error : 'status(400): The email or password cannot be empty!'})
+  };
+
+  if (emailValidator(req.body.email)) {
+    res.status(400).send({ error : 'status(400): Email already in used!'});
+  }
+  let newUser = {id, email, password};
+  users[id] = newUser;   
+  req.params.user_id = id;  
+  res.redirect("/urls");
+});
+
+app.get("/register", (req, res) => {
+  const id = req.params.user_id;
+  const user = users[id];
+  const templateVars = {user}; 
+  res.render("registration", templateVars);
 });
 
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
+
 
