@@ -140,6 +140,7 @@ app.post("/register", (req, res) => {
 app.get("/register", (req, res) => {
   const id = req.params.user_id;
   const user = users[id];
+  
   const templateVars = {user}; 
   res.render("registration", templateVars);
 });
