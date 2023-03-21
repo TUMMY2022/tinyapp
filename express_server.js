@@ -47,6 +47,7 @@ app.get("/urls.json", (req, res) => {
 app.get("/urls", (req, res) => {
   const user= req.cookies['username'];
   console.log("username", user);
+  console.log(req.cookies);
   const templateVars = { urls: urlDatabase, user};
   res.render("urls_index", templateVars);
 });
@@ -110,7 +111,8 @@ app.post("/urls/:id", (req, res) => {
 
 
 app.post("/login", (req, res) => {
-  const name = req.body.name;
+  const name = req.body.email;
+  console.log("body", req.body);
   res.cookie('username', name)
   console.log("is name", name);
   res.redirect(`/urls`);
@@ -140,9 +142,16 @@ app.post("/register", (req, res) => {
 app.get("/register", (req, res) => {
   const id = req.params.user_id;
   const user = users[id];
-  
   const templateVars = {user}; 
   res.render("registration", templateVars);
+});
+
+app.get("/login", (req, res) => {
+  const id = req.params.user_id;
+  const user = users[id];
+  const templateVars = {user}; 
+  console.log("templateVars",templateVars)
+  res.render("login", templateVars);
 });
 
 
