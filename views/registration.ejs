@@ -14,30 +14,31 @@
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous"
     />
-    <title>TinyApp</title>
+    <title>TinyApp Registration</title>
+    <%- include('partials/_header') %>
   </head>
   <body>
-    <%- include('partials/_header') %>
-  <main style="margin: 1em;">
-    <h2>Create Account</h2>
-    <br>
-    <form action="/register" method="POST">
-      <div class="form-group mb-2">
-        <label for="email">Email Address:</label>
-        <input class="form-control" type="email" name="email" placeholder="abc@abc.com"
-          style="width: 300px; margin: 0">
-      </div>
-      <div class="form-group mb-2">
-        <br>
-        <label for="password">Password:</label>
-        <input class="form-control" type="password" name="password" placeholder="" style="width: 300px; margin: 0">
-      </div>
-      <div class="form-group mb-2">
-        <br>
-        <button type="submit" class="btn btn-primary">Register</button>
-      </div>
-    </form>
-  </main>
+    <main style="margin: 1em;">
+      <h2>Tinyapp Registration</h2>
+      <br>
+      <form action="/register" method="POST">
+        <div class="form-group mb-2">
+          <div style="color: red"><%= error %> <br/></div>
+          <label for="email">Email Address:</label>
+          <input class="form-control" type="email" name="email" placeholder="abc@abc.com"
+            style="width: 300px; margin: 0">
+        </div>
+        <div class="form-group mb-2">
+          <br>
+          <label for="password">Password:</label>
+          <input class="form-control" type="password" name="password" placeholder="" style="width: 300px; margin: 0">
+        </div>
+        <div class="form-group mb-2">
+          <br>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+      </form>
+    </main>
     <!-- Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

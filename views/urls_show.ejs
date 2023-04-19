@@ -9,35 +9,40 @@
       crossorigin="anonymous"
     />
     <title>URL - TinyApp Example</title>
-  </head>
+		<%- include('partials/_header') %>
+	</head>
 
-  <body>
-    <header>
-      <%- include('partials/_header') %>
-    </header>
+	<body>
+		<div class="card text-center">
+			<div class="card-header">
+				<div class="card-body">
+					<h5 class="card-title">TinyURL for: <%= longURL %></h5>
 
-    <% if (user) { %>
-      <div class="card text-center">
-        <div class="card-header"></div>
-        <div class="card-body">
-          <h5 class="card-title">TinyURL for: <%= longURL %></h5>
-          <p class="card-text">
-          Short URL ID: <a href="/u/<%= id %>"><%= id %></a>
-        </p>
-      </div>
-
-      <form method="POST" action="/urls/<%= id %>">
-        <h4>Edit</h4>
-        <label for="newURL">New URL:</label>
-        <input type="text" name="longURL" placeholder="http://" style="width: 300px; margin: 1em">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-
-      <div class="card-footer text-muted"></div>
-    </div>
-    <% } else { %>
-      <p class="alert alert-danger" > You must be logged in to see URL</p>
-    <% }  %>
+					<p class="card-text">
+						Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a>
+					</p>
+				</div>
+			</div>
+			<div class="card-header">
+				<div class="card-body">
+					<h5 class="card-title">Edit</h5>
+					<form class="form-group" action="/urls/<%= shortURL %>" method="POST">
+						<div class="form-group mb-2">
+							<label for="longURL">New Long URL:</label>
+							<input
+								class="form-centered"
+								type="text"
+								name="longURL"
+								placeholder="http://"
+								style="width: 300px; margin: 1em"
+							/>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="card-footer text-muted"></div>
+		</div>
     <!-- Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
