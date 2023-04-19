@@ -15,7 +15,7 @@ const testUsers = {
   }
 };
 
-describe('getUserByEmail', function() {
+describe('emailChecher', function() {
   it('should return a user with valid email', function() {
     const user =  emailChecher("user@example.com", testUsers)
     const expectedUserID = "userRandomID";
