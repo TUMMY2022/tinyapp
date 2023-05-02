@@ -2,28 +2,37 @@ const { assert } = require('chai');
 
 const { emailChecher } = require('../outer/helpers.js');
 
-const testUsers = {
-  "userRandomID": {
-    id: "userRandomID", 
-    email: "user@example.com", 
-    password: "purple-monkey-dinosaur"
-  },
-  "user2RandomID": {
-    id: "user2RandomID", 
-    email: "user2@example.com", 
-    password: "dishwasher-funk"
-  }
-};
-
 describe('emailChecher', function() {
-  it('should return a user with valid email', function() {
-    const user =  emailChecher("user@example.com", testUsers)
-    const expectedUserID = "userRandomID";
-    assert.strictEqual(user.id, expectedOutput);
-  });
-  it("should return undefined if we pass in an email that is not in our users database", function () {
-		const user = emailChecher("fun@example.com", testUsers);
-		const expectedOutput = undefined;
-		assert.strictEqual(user, expectedOutput);
-	});
+  const testUsers = {
+    'userRandomID': {
+      id: 'userRandomID',
+      name: 'user1',
+      email: 'user1@example.com',
+      password: 'user1p'
+    },
+    'user2RandomID': {
+      id: 'user2RandomID',
+      name: 'user2',
+      email: 'user2@example.com',
+      password: 'user2p'
+    }
+  };
+
+  it('return a user with valid email', function() {
+    const user = emailChecher("user1@example.com", testUsers)
+    const expectedUser = testUsers['userRandomID'];
+    assert.deepEqual(user, expectedUser)
+  })
+
+  it('return null with invalid email', function() {
+    const user = emailChecher("user55@example.com", testUsers)
+    const expectedUser = null;
+    assert.deepEqual(user, expectedUser)
+  })
+
+  it('should return null if empty string', function() {
+    const user = emailChecher("", testUsers)
+    const expectedUser = null;
+    assert.deepEqual(user, expectedUser)
+  })
 });
